@@ -1,0 +1,16 @@
+ spring:
+  application:
+    name: ecommerce
+  datasource:
+    url: jdbc:postgresql://localhost:5432/<your_database_name>
+    username: <your_db_username>
+    password: <your_db_password>
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+
+server:
+  port: 8081
