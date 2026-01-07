@@ -1,8 +1,9 @@
-package com.tafh.ecommerce.exception;
+package com.tafh.ecommerce.common.exception;
 
 public class BadRequestException extends RuntimeException{
 
   public BadRequestException(String message){
     super(message);
   }
+
 }

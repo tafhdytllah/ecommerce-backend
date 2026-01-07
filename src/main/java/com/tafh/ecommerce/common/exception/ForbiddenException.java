@@ -1,8 +1,9 @@
-package com.tafh.ecommerce.exception;
+package com.tafh.ecommerce.common.exception;
 
 public class ForbiddenException extends RuntimeException{
 
   public ForbiddenException(String message){
     super(message);
   }
+
 }

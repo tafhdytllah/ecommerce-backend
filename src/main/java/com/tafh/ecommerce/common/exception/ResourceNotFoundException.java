@@ -1,8 +1,9 @@
-package com.tafh.ecommerce.exception;
+package com.tafh.ecommerce.common.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
   public ResourceNotFoundException(String message) {
     super(message);
   }
+
 }
