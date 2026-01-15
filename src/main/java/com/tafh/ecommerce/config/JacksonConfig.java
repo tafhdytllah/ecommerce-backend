@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JacksonConfig {
 
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper()
-      .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-  }
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper()
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
 
 }

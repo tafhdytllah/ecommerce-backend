@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PagingResponse {
 
-  private int currentPage;
-  private int pageSize;
-  private int totalPages;
+    private int currentPage;
+    private int pageSize;
+    private int totalPages;
 
 }

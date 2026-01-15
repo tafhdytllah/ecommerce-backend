@@ -9,23 +9,23 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
-  @Bean
-  public OpenAPI openAPI() {
-    return new OpenAPI()
-      .info(new Info()
-        .title("User Service API")
-        .version("v1")
-        .description("E-commerce User Service"))
-      .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-      .components(
-        new io.swagger.v3.oas.models.Components()
-          .addSecuritySchemes("bearerAuth",
-            new SecurityScheme()
-              .type(SecurityScheme.Type.HTTP)
-              .scheme("bearer")
-              .bearerFormat("JWT")
-          )
-      );
-  }
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("User Service API")
+                        .version("v1")
+                        .description("E-commerce User Service"))
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(
+                        new io.swagger.v3.oas.models.Components()
+                                .addSecuritySchemes("bearerAuth",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                )
+                );
+    }
 
 }

@@ -19,47 +19,47 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final JwtService jwtService;
+    private final JwtService jwtService;
 
-  @Override
-  protected void doFilterInternal(
-    HttpServletRequest request,
-    @NonNull HttpServletResponse response,
-    @NonNull FilterChain filterChain
-  ) throws ServletException, IOException {
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
 
-    String authHeader = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-      filterChain.doFilter(request, response);
-      return;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = authHeader.substring(7);
+
+        if (!jwtService.isTokenValid(token)) {
+            SecurityContextHolder.clearContext();
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        Claims claims = jwtService.parseClaims(token);
+
+        UserPrincipal principal = UserPrincipalMapper.fromClaims(claims);
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        principal,
+                        null,
+                        principal.getAuthorities()
+                );
+
+        authentication.setDetails(
+                new WebAuthenticationDetailsSource().buildDetails(request)
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        filterChain.doFilter(request, response);
     }
-
-    String token = authHeader.substring(7);
-
-    if (!jwtService.isTokenValid(token)) {
-      SecurityContextHolder.clearContext();
-      filterChain.doFilter(request, response);
-      return;
-    }
-
-    Claims claims = jwtService.parseClaims(token);
-
-    UserPrincipal principal = UserPrincipalMapper.fromClaims(claims);
-
-    UsernamePasswordAuthenticationToken authentication =
-      new UsernamePasswordAuthenticationToken(
-        principal,
-        null,
-        principal.getAuthorities()
-      );
-
-    authentication.setDetails(
-      new WebAuthenticationDetailsSource().buildDetails(request)
-    );
-
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-
-    filterChain.doFilter(request, response);
-  }
 }

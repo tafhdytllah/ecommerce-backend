@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter @Setter
+@Getter
+@Setter
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 
-  private String secret;
+    private String secret;
 
-  private long expiration;
+    private long expiration;
 
-  private String issuer;
+    private String issuer;
 }

@@ -11,10 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableConfigurationProperties(JwtProperties.class)
 public class AppConfig {
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
 

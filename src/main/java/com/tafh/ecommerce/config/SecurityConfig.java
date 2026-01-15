@@ -18,42 +18,45 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-      // Disable CSRF (REST API)
-      .csrf(AbstractHttpConfigurer::disable)
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                // Disable CSRF (REST API)
+                .csrf(AbstractHttpConfigurer::disable)
 
-      // Stateless session
-      .sessionManagement(session ->
-        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-      )
+                // Stateless session
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
 
-      // Authorization rules
-      .authorizeHttpRequests(auth -> auth
-        .requestMatchers(
-          "/api/v1/auth/**",
-          "/api/v1/health",
-          "/swagger-ui/**",
-          "/v3/api-docs/**"
-        ).permitAll()
-        .anyRequest().authenticated()
-      )
+                // Authorization rules
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/api/v1/health",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
 
-      // JWT Filter
-      .addFilterBefore(
-        jwtAuthenticationFilter,
-        UsernamePasswordAuthenticationFilter.class
-      );
+                                "/api/v1/users/register",
+                                "/api/v1/users/login"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
 
-    return http.build();
-  }
+                // JWT Filter
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-  }
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
 }
